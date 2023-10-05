@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="577.0" prefWidth="945.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagement.Controllers.LibraryMembersControllers.MainMenuController">
+   <top>
+      <HBox prefHeight="56.0" prefWidth="946.0" style="-fx-background-color: #FFFFFC;" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="57.0" prefWidth="170.0" style="-fx-background-color: #170A1C;">
+               <children>
+                  <ImageView fitHeight="52.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Images/512xLibrary.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="5.0" top="3.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="57.0" prefWidth="99.0" text="Library" textFill="#fffffc">
+                     <font>
+                        <Font name="Segoe UI Symbol" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+   </top>
+   <left>
+      <VBox prefHeight="521.0" prefWidth="170.0" style="-fx-background-color: #170A1C;" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#toAddBooksView" prefHeight="51.0" prefWidth="170.0" style="-fx-background-color: #170A1C;" text="Issue Book" textFill="#fffffc">
+               <font>
+                  <Font name="Segoe UI Symbol" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#toReturnBookView" prefHeight="51.0" prefWidth="170.0" style="-fx-background-color: #170A1C;" text="Return Book" textFill="#fffffc">
+               <font>
+                  <Font name="Segoe UI Symbol" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </Button>
+         </children></VBox>
+   </left>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFC;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="45.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Images/512xstudent.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="221.0" layoutY="23.0" text="MemberId: ">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label layoutX="223.0" layoutY="87.0" text="Type: ">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label layoutX="223.0" layoutY="130.0" text="Total Books Borrowed:">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label layoutX="221.0" layoutY="54.0" text="Name:">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label fx:id="memberIdLabel" layoutX="299.0" layoutY="25.0" text="Temp">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="nameLabel" layoutX="271.0" layoutY="55.0" text="Temp">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="typeLabel" layoutX="266.0" layoutY="89.0" text="Temp">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="booksBorrowedLabel" layoutX="372.0" layoutY="130.0" text="Temp">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
