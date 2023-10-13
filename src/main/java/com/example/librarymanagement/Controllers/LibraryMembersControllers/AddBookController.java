@@ -1,14 +1,17 @@
 package com.example.librarymanagement.Controllers.LibraryMembersControllers;
 
 import com.example.librarymanagement.Logic.Books;
+import com.example.librarymanagement.Logic.SQLHandler;
 import com.example.librarymanagement.Logic.Student;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableListValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -25,12 +28,15 @@ public class AddBookController implements Initializable {
 
 
     @FXML public Label usernameLabel;
-    @FXML public TableView <ObservableMap<String, String>> booksTable;
-    @FXML public TableColumn <ObservableMap<String, String> ,String> bookIdCol;
-    @FXML public TableColumn <ObservableMap<String, String> ,String> titleCol;
-    @FXML public TableColumn <ObservableMap<String, String> ,String> authorCol;
-    @FXML public TableColumn <ObservableMap<String, String> ,String> isAvailable;
+    @FXML public TableView <Books> booksTable;
+    @FXML public TableColumn <Books ,String> bookIdCol;
+    @FXML public TableColumn <Books ,String> titleCol;
+    @FXML public TableColumn <Books ,String> authorCol;
+    @FXML public TableColumn <Books ,String> isAvailable;
+    @FXML public TableColumn <Books ,CheckBox> issueBookCol;
 
+
+    ObservableList<Books> allBookList;
 
     public void setUserDetails(String username)
     {
@@ -38,30 +44,32 @@ public class AddBookController implements Initializable {
     }
 
 
+    @FXML
+    public void issueBook(ActionEvent e)
+    {
+        System.out.println("--- Selected Books ---");
+        for (Books books : allBookList) {
+            if (books.getSelectBook().isSelected()) {
+                System.out.println(books.getBookId());
+                SQLHandler.addEntryInDB(usernameLabel.getText(), books.getBookId());
+                System.out.println("Books Added Succesfully");
+                books.getSelectBook().setSelected(false);
+            }
+        }
+        allBookList = SQLHandler.getAllBooks();
+        booksTable.setItems(allBookList);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Books books = new Books();
+        bookIdCol.setCellValueFactory(new PropertyValueFactory<Books, String>("bookId"));
+        titleCol.setCellValueFactory(new PropertyValueFactory<Books, String>("title"));
+        authorCol.setCellValueFactory(new PropertyValueFactory<Books, String>("author"));
+        isAvailable.setCellValueFactory(new PropertyValueFactory<Books, String>("isAvailable"));
+        issueBookCol.setCellValueFactory(new PropertyValueFactory<Books, CheckBox>("selectBook"));
 
-        List<HashMap<String, String>> allBookList = books.getAllBooks();
-
-        ObservableList<ObservableMap<String, String>> observableBookList = FXCollections.observableArrayList();
-
-        for (HashMap<String, String> map : allBookList) {
-            ObservableMap<String, String> observableMap = FXCollections.observableHashMap();
-            observableMap.put("bookId", map.get("bookId"));
-            observableMap.put("author", map.get("author"));
-            observableMap.put("title", map.get("title"));
-            observableMap.put("isAvailable", map.get("isAvailable"));
-            observableBookList.add(observableMap);
-        }
-
-        booksTable.setItems(observableBookList);
-
-
-        bookIdCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get("bookId")));
-        titleCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get("title")));
-        authorCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get("author")));
-        isAvailable.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get("isAvailable")));
+        allBookList = SQLHandler.getAllBooks();
+        booksTable.setItems(allBookList);
 
     }
 }

@@ -1,139 +1,127 @@
 package com.example.librarymanagement.Logic;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.CheckBox;
+
 import java.sql.*;
 import java.util.*;
 
 public class Books {
 
-    private String bookId;
-    private String title;
-    private String author;
+    private SimpleStringProperty bookId;
+    private SimpleStringProperty title;
+    private SimpleStringProperty author;
+    private SimpleStringProperty isAvailable;
     //int quantity;
+    private CheckBox selectBook;
 
 //    private final String _URL = "jdbc:mysql://localhost:3306/LibraryManagement";
 //    private final String _Username = "root";
 //    private final String _Password = "deep1520";
 //    private final String _TableName = "Books";
 
-    public Books(){}
+    public void insertBooks(String bookId, String title, String author){
 
-    public Books(String bookId, String title, String author)
+        new SQLHandler().addBook(bookId, title, author);
+    }
+
+    public Books(String bookId, String title, String author, String isAvailable)
     {
+        this.bookId = new SimpleStringProperty(bookId);
+        this.title = new SimpleStringProperty(title);
+        this.isAvailable = new SimpleStringProperty(isAvailable);
+        this.author = new SimpleStringProperty(author);
+        this.selectBook = new CheckBox();
+    }
+
+// GETTER AND SETTER -- BEGIN
+
+    public String getBookId() {
+        return bookId.get();
+    }
+
+//    public void setBookId(String bookId) {
+//        this.bookId = bookId;
+//    }
+
+    public String getTitle() {
+        return title.get();
+    }
+
+//    public void setTitle(String title) {
+//        this.title = title;
+//    }
+
+    public String getAuthor() {
+        return author.get();
+    }
+
+//    public void setAuthor(String author) {
+//        this.author = author;
+//    }
+
+    public CheckBox getSelectBook() {
+        return selectBook;
+    }
+
+    public void setSelectBook(CheckBox selectBook) {
+        this.selectBook = selectBook;
+        System.out.println(this.selectBook);
+    }
+
+    public String getIsAvailable() {
+        return isAvailable.get();
+    }
+
+    public SimpleStringProperty isAvailableProperty() {
+        return isAvailable;
+    }
+
+    public void setIsAvailable(String isAvailable) {
+        this.isAvailable.set(isAvailable);
+    }
+
+    // GETTER AND SETTER -- END
+
+
+
+
+//    public HashMap<String, String> getBook(String type, String searchItem)
+//    {
+//        HashMap<String, String> finalResult = new HashMap<>();
 //        try
 //        {
-//            this.bookId = bookId;
-//            this.title = title;
-//            this.author = author;
-//
 //            Class.forName("com.mysql.cj.jdbc.Driver");
-//            Connection connection = DriverManager.getConnection(_URL + "/" + _TableName, _Username, _Password);
+//            Connection connection = DriverManager.getConnection(_URL, _Username, _Password);
 //
-//            /*  ---------- Checks If Table is There Or Not ----------
-//            Statement statement = connection.createStatement();
-//            String ifTableQuery = "SELECT * FROM information_schema.tables" +
-//                    "WHERE table_schema = " + connection.getCatalog() +
-//                    "AND table_name = " + _TableName;
+//            String searchBookQuery = "SELECT * FROM " + _TableName + " WHERE " + type + "=" + searchItem;
+//            Statement searchBookStatement = connection.createStatement();
+//            ResultSet resultSet = searchBookStatement.executeQuery(searchBookQuery);
 //
-//            ResultSet resultSet = statement.executeQuery(ifTableQuery);
-//            int rowsAffected = resultSet.getInt(0);
-//            if(rowsAffected == 0){
-//                Statement createDatabase = connection.createStatement();
-//                String createTable = "CREATE TABLE " + _TableName;
-//                System.out.println("Table "+_TableName + "Has Been Created");
-//            }*/
 //
-//            String addBookQuery = "INSERT VALUES INTO " + _TableName + " (bookId, title, author) VALUES (?,?,?)";
-//            PreparedStatement addBookStatement = connection.prepareStatement(addBookQuery);
+//            this.bookId = resultSet.getNString(1);
+//            this.title = resultSet.getNString(2);
+//            this.author = resultSet.getNString(3);
 //
-//            addBookStatement.setString(1, bookId);
-//            addBookStatement.setString(2, title);
-//            addBookStatement.setString(3, author);
 //
-//            int rowsAffected = addBookStatement.executeUpdate();
-//            if(rowsAffected < 0)
+//            if (this.bookId != null && this.title != null && this.author != null)
 //            {
-//                System.out.println("Query Not Executed Properly");
+//
+//                finalResult.put("bookId", this.bookId);
+//                finalResult.put("title" , this.title);
+//                finalResult.put("author" , this.author);
+//
+//                return finalResult;
 //            }
-//            connection.close();
+//
+//            return finalResult;
+//
 //        }
 //        catch (Exception e)
 //        {
 //            System.out.println(e.getMessage());
 //        }
-
-    }
-
-    public HashMap<String, String> getBook(String type, String searchItem)
-    {
-        HashMap<String, String> finalResult = new HashMap<>();
-        try
-        {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(_URL, _Username, _Password);
-
-            String searchBookQuery = "SELECT * FROM " + _TableName + " WHERE " + type + "=" + searchItem;
-            Statement searchBookStatement = connection.createStatement();
-            ResultSet resultSet = searchBookStatement.executeQuery(searchBookQuery);
-
-
-            this.bookId = resultSet.getNString(1);
-            this.title = resultSet.getNString(2);
-            this.author = resultSet.getNString(3);
-
-
-            if (this.bookId != null && this.title != null && this.author != null)
-            {
-
-                finalResult.put("bookId", this.bookId);
-                finalResult.put("title" , this.title);
-                finalResult.put("author" , this.author);
-
-                return finalResult;
-            }
-
-            return finalResult;
-
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-        return finalResult;
-    }
-
-    public List<HashMap<String, String>> getAllBooks(){
-        List<HashMap<String, String>> allBookDetails = new ArrayList<>();
-
-        try
-        {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(_URL, _Username, _Password);
-
-            String searchBookQuery = "SELECT * FROM " + _TableName;
-            Statement searchBookStatement = connection.createStatement();
-            ResultSet resultSet = searchBookStatement.executeQuery(searchBookQuery);
-
-            while (resultSet.next())
-            {
-                HashMap<String, String> current = new HashMap<>();
-                Integer tempBookId = resultSet.getInt(1);
-                Boolean tempIsAvailable = resultSet.getBoolean(4);
-
-                current.put("bookId" , tempBookId.toString());
-                current.put("title" , (resultSet.getNString(2)).toString());
-                current.put("author" , (resultSet.getNString(3)).toString());
-                current.put("isAvailable" , tempIsAvailable.toString());
-
-                allBookDetails.add(current);
-            }
-
-            return allBookDetails;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            return allBookDetails;
-        }
-    }
+//        return finalResult;
+//    }
 
 }

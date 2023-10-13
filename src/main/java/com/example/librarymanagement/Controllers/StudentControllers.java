@@ -12,14 +12,14 @@ import java.util.ResourceBundle;
 public class StudentControllers implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        List<HashMap<String,String>> allBooksData;
-        Books books = new Books();
-
-        allBooksData = books.getAllBooks();
-        for (HashMap<String,String> book : allBooksData)
-        {
-            System.out.println(book.get("bookId"));
-        }
+//        List<HashMap<String,String>> allBooksData;
+//        Books books = new Books();
+//
+//        allBooksData = books.getAllBooks();
+//        for (HashMap<String,String> book : allBooksData)
+//        {
+//            System.out.println(book.get("bookId"));
+//        }
 
     }
 }

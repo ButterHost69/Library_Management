@@ -106,11 +106,16 @@
                         <Insets left="2.0" />
                      </HBox.margin>
                   </Button>
+                  <Button fx:id="issueBookBtn" mnemonicParsing="false" onAction="#issueBook" text="Issue Book">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
             </HBox>
-            <ScrollPane prefHeight="420.0" prefWidth="775.0">
+            <ScrollPane prefHeight="413.0" prefWidth="775.0">
                <content>
-                  <TableView fx:id="booksTable" prefHeight="415.0" prefWidth="773.0">
+                  <TableView fx:id="booksTable" prefHeight="415.0" prefWidth="774.0">
                     <columns>
                       <TableColumn fx:id="bookIdCol" minWidth="154.0" prefWidth="106.40001982450485" text="Book Id" />
                       <TableColumn fx:id="titleCol" minWidth="155.0" prefWidth="122.39997100830078" text="Title" />
