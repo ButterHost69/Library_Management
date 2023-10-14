@@ -10,24 +10,28 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class AddBookController implements Initializable {
+public class AddBookController implements Initializable{
 
 
     @FXML public Label usernameLabel;
+    @FXML public Button usernameBtn;
     @FXML public TableView <Books> booksTable;
     @FXML public TableColumn <Books ,String> bookIdCol;
     @FXML public TableColumn <Books ,String> titleCol;
@@ -38,11 +42,43 @@ public class AddBookController implements Initializable {
 
     ObservableList<Books> allBookList;
 
+    @FXML
     public void setUserDetails(String username)
     {
-        usernameLabel.setText(username);
+        usernameBtn.setText(username);
     }
 
+    public void toReturnBookView(ActionEvent e) throws IOException {
+
+        //HashMap<String, String> userDetails = new Student().getMember("memberId", usernameBtn.getText());
+
+        FXMLLoader loader = new FXMLLoader((getClass().getResource("/FXML/StudentViews/returnBookView.fxml")));
+        Parent root = loader.load();
+
+        returnBookController r_returnBookController = loader.getController();
+        r_returnBookController.setUserDetails(usernameBtn.getText());
+
+        Stage stage = (Stage) (((Node) e.getSource()).getScene().getWindow());
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+    }
+
+    public void toMainMenuView(ActionEvent e) throws IOException {
+
+        HashMap<String, String> userDetails = new Student().getMember("memberId", usernameBtn.getText());
+
+        FXMLLoader loader = new FXMLLoader((getClass().getResource("/FXML/StudentViews/StudentView.fxml")));
+        Parent root = loader.load();
+
+        MainMenuController mainMenuController = loader.getController();
+        mainMenuController.setUserDetails(userDetails);
+
+        Stage stage = (Stage) (((Node) e.getSource()).getScene().getWindow());
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+    }
 
     @FXML
     public void issueBook(ActionEvent e)
@@ -51,7 +87,7 @@ public class AddBookController implements Initializable {
         for (Books books : allBookList) {
             if (books.getSelectBook().isSelected()) {
                 System.out.println(books.getBookId());
-                SQLHandler.addEntryInDB(usernameLabel.getText(), books.getBookId());
+                SQLHandler.addEntryInDB(usernameBtn.getText(), books.getBookId());
                 System.out.println("Books Added Succesfully");
                 books.getSelectBook().setSelected(false);
             }

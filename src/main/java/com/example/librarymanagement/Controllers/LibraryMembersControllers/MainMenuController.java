@@ -1,5 +1,6 @@
 package com.example.librarymanagement.Controllers.LibraryMembersControllers;
 
+import com.example.librarymanagement.Logic.LoggedinUserDetails;
 import com.example.librarymanagement.Logic.Student;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,7 +31,13 @@ public class MainMenuController{
 
         nameLabel.setText(userDetails.get("name"));
         typeLabel.setText(userDetails.get("type"));
-        booksBorrowedLabel.setText(userDetails.get("booksBorrowed"));
+        booksBorrowedLabel.setText(userDetails.get("totalBooksBorrowed"));
+
+
+        LoggedinUserDetails.Details.setMemberID(username);
+        LoggedinUserDetails.Details.setType(nameLabel.getText());
+        LoggedinUserDetails.Details.setType(typeLabel.getText());
+
     }
 
     public void toAddBooksView(ActionEvent e) throws IOException {
@@ -46,9 +53,20 @@ public class MainMenuController{
         stage.setScene(scene);
     }
 
-    public void toReturnBookView(ActionEvent e)
-    {
+    public void toReturnBookView(ActionEvent e) throws IOException {
 
+        //HashMap<String, String> userDetails = new Student().getMember("memberId", usernameBtn.getText());
+
+        FXMLLoader loader = new FXMLLoader((getClass().getResource("/FXML/StudentViews/returnBookView.fxml")));
+        Parent root = loader.load();
+
+        returnBookController r_returnBookController = loader.getController();
+        r_returnBookController.setUserDetails(username);
+
+        Stage stage = (Stage) (((Node) e.getSource()).getScene().getWindow());
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
     }
 
 

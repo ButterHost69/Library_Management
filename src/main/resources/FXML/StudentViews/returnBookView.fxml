@@ -13,8 +13,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="577.0" prefWidth="945.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagement.Controllers.LibraryMembersControllers.AddBookController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="577.0" prefWidth="945.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagement.Controllers.LibraryMembersControllers.returnBookController">
    <top>
       <HBox prefHeight="56.0" prefWidth="946.0" style="-fx-background-color: #FFFFFC;" BorderPane.alignment="CENTER">
          <children>
@@ -57,7 +58,7 @@
    <left>
       <VBox prefHeight="521.0" prefWidth="170.0" style="-fx-background-color: #170A1C;" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="170.0" style="-fx-background-color: #3D194D;" text="Issue Book" textFill="#fffffc">
+            <Button fx:id="backToIssueBookBtn" mnemonicParsing="false" onAction="#toAddBooksView" prefHeight="51.0" prefWidth="170.0" style="-fx-background-color: #170A1C;" text="Issue Book" textFill="#fffffc">
                <font>
                   <Font name="Segoe UI Symbol" size="16.0" />
                </font>
@@ -65,7 +66,7 @@
                   <Insets top="15.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="returnBookBtn" mnemonicParsing="false" onAction="#toReturnBookView" prefHeight="51.0" prefWidth="170.0" style="-fx-background-color: #170A1C;" text="Return Book" textFill="#fffffc">
+            <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="170.0" style="-fx-background-color: #3D194D;" text="Return Book" textFill="#fffffc">
                <font>
                   <Font name="Segoe UI Symbol" size="16.0" />
                </font>
@@ -79,7 +80,7 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #FFFFFC;" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="72.0" prefWidth="775.0">
                <children>
                   <Label text="Search Book By ID">
                      <font>
@@ -102,23 +103,42 @@
                         <Insets left="2.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="issueBookBtn" mnemonicParsing="false" onAction="#issueBook" text="Issue Book">
+                  <Button fx:id="returnBookBtn" mnemonicParsing="false" onAction="#returnBook" text="Return Book">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Button>
                </children>
             </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="775.0" style="-fx-background-color: #F5F5F5;">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total Books Borrowed:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="70.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Text fx:id="booksBorrowedLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="null">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </HBox>
             <ScrollPane prefHeight="413.0" prefWidth="775.0">
                <content>
                   <TableView fx:id="booksTable" prefHeight="415.0" prefWidth="774.0">
-                    <columns>
-                      <TableColumn fx:id="bookIdCol" minWidth="154.0" prefWidth="106.40001982450485" text="Book Id" />
-                      <TableColumn fx:id="titleCol" minWidth="155.0" prefWidth="122.39997100830078" text="Title" />
-                        <TableColumn fx:id="authorCol" minWidth="154.0" prefWidth="122.39997100830078" text="Author" />
-                        <TableColumn fx:id="isAvailable" minWidth="155.0" prefWidth="122.39997100830078" text="Is Available" />
-                        <TableColumn fx:id="issueBookCol" minWidth="154.0" prefWidth="122.39997100830078" text="Issue Book" />
-                    </columns>
+                     <columns>
+                        <TableColumn fx:id="bookIdCol" minWidth="154.0" prefWidth="190.0" text="Book Id" />
+                        <TableColumn fx:id="titleCol" minWidth="101.59999084472656" prefWidth="190.0" text="Title" />
+                        <TableColumn fx:id="authorCol" minWidth="154.0" prefWidth="190.0" text="Author" />
+                        <TableColumn fx:id="returnBookCol" minWidth="154.0" prefWidth="190.0" text="Return Book" />
+                     </columns>
                   </TableView>
                </content>
             </ScrollPane>
